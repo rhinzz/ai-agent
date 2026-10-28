@@ -6,20 +6,18 @@ import argparse
 
 def main():
     load_dotenv()
-    api_key = os.environ.get('OPENROUTER_API_KEY')
+    api_key = os.environ.get("OPENROUTER_API_KEY")
     if not api_key:
-        raise RuntimeError('api_key not found')
+        raise RuntimeError("api_key not found")
 
     client = OpenAI(
         base_url="https://openrouter.ai/api/v1",
         api_key=api_key,
     )
 
-    parser = argparse.ArgumentParser(description='Chatbot')
-    parser.add_argument('user_prompt', type=str,
-                        help='Send the message to the chatbot')
-    parser.add_argument('--verbose', action='store_true',
-                        help='Enable verbose output')
+    parser = argparse.ArgumentParser(description="Chatbot")
+    parser.add_argument("user_prompt", type=str, help="Send the message to the chatbot")
+    parser.add_argument("--verbose", action="store_true", help="Enable verbose output")
     args = parser.parse_args()
 
     messages = [
