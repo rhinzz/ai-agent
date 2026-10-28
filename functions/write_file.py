@@ -1,8 +1,4 @@
 import os
-import sys
-
-sys.path.append("..")
-from config import MAX_CHARS
 
 
 def write_file(working_directory: str, file_path: str, content: str) -> str:

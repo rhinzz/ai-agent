@@ -1,8 +1,4 @@
 import os
-import sys
-
-sys.path.append("..")
-from config import MAX_CHARS
 
 
 def get_files_info(working_directory: str, directory: str = ".") -> str:
