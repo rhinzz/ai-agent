@@ -1,8 +1,25 @@
-import os
-import sys
+import os, sys
 
 sys.path.append("..")
 from config import MAX_CHARS
+
+schema_get_file_content = {
+    "type": "function",
+    "function": {
+        "name": "get_file_content",
+        "description": "Read file content in the specified working directory and return the file content in string to specified maximum characters",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file_path": {
+                    "type": "string",
+                    "description": "Path to get file content, relative to working directory",
+                }
+            },
+            "required": ["file_path"],
+        },
+    },
+}
 
 
 def get_file_content(working_directory: str, file_path: str) -> str:
