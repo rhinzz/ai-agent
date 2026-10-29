@@ -2,7 +2,7 @@ import os, json, argparse
 from dotenv import load_dotenv
 from openai import OpenAI
 from prompts import system_prompt
-from call_function import available_functions
+from call_function import available_functions, call_function
 
 
 def main():
@@ -47,13 +47,17 @@ def generate_content(client: OpenAI, messages: list, verbose: bool) -> None:
     message = response.choices[0].message
     for tool_call in message.tool_calls:
         function_args = json.loads(tool_call.function.arguments or "{}")
-        print(f"Calling function: {tool_call.function.name}({function_args})")
+        result_message = call_function(tool_call, function_args)
+        if not result_message["content"]:
+            raise RuntimeError(f"Empty response for {tool_call.function.name}")
+        if verbose:
+            print(f"-> {result_message["content"]}")
 
-    if verbose:
-        print("Prompt tokens:", response.usage.prompt_tokens)
-        print("Response tokens:", response.usage.completion_tokens)
-    print("Response:")
-    print(message.content)
+    # if verbose:
+    #     print("Prompt tokens:", response.usage.prompt_tokens)
+    #     print("Response tokens:", response.usage.completion_tokens)
+    # print("Response:")
+    # print(message.content)
 
 
 if __name__ == "__main__":
